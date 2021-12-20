@@ -11,6 +11,8 @@ public class PlayerMover : MonoBehaviour
 
     private bool _isDead;
 
+    [SerializeField] private Score _score; // REMOVE THIS
+
     private void Update()
     {
         if (_isDead) return;
@@ -22,7 +24,6 @@ public class PlayerMover : MonoBehaviour
         var angle = horizontalInput == 0 ? 0 : horizontalInput < 0 ? _rotationAngle : -_rotationAngle;
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, angle), _rotationSmooth * Time.deltaTime);
 
-
         if (transform.position.x > _xBoundsPoition || transform.position.x < -_xBoundsPoition)
         {
             var temp = transform.position.x > _xBoundsPoition ? _xBoundsPoition : -_xBoundsPoition;
@@ -33,6 +34,7 @@ public class PlayerMover : MonoBehaviour
     public void Die()
     {
         _isDead = true;
+        _score.SaveHighScore();
     }
 
 }

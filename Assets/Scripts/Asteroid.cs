@@ -31,9 +31,11 @@ public class Asteroid : MonoBehaviour
     private IEnumerator PlayerCollision(PlayerMover player)
     {
         _collisionParticle.Play();
-        GetComponent<MeshRenderer>().enabled = false;
+        var mesh = GetComponent<MeshRenderer>();
+        mesh.enabled = false;
         player.Die();
         yield return new WaitForSeconds(_collisionParticle.main.duration);
         gameObject.SetActive(false);
+        mesh.enabled = true;
     }
 }
