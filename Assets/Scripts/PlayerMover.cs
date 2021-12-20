@@ -2,7 +2,10 @@ using UnityEngine;
 
 public class PlayerMover : MonoBehaviour
 {
+    private SmoothFollow _cameraFollow;
+
     [SerializeField] private float _speed = 5f;
+    private float _speedMultiplier = 2f;
 
     [SerializeField] private float _rotationSmooth = 10f;
     private float _rotationAngle = 45f;
@@ -12,6 +15,12 @@ public class PlayerMover : MonoBehaviour
     private bool _isDead;
 
     [SerializeField] private Score _score; // REMOVE THIS
+    [SerializeField] private AsteroidsSpawner _asteroidSpawner; // REMOVE THIS
+
+    private void Start()
+    {
+        _cameraFollow = Camera.main.GetComponent<SmoothFollow>();
+    }
 
     private void Update()
     {
@@ -28,6 +37,20 @@ public class PlayerMover : MonoBehaviour
         {
             var temp = transform.position.x > _xBoundsPoition ? _xBoundsPoition : -_xBoundsPoition;
             transform.position = new Vector3(temp, transform.position.y, transform.position.z);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _speed *= _speedMultiplier;
+            _cameraFollow.ChangeCameraView(true);
+            _asteroidSpawner.IsDoubleSpeed = true;
+        }
+
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            _speed /= _speedMultiplier;
+            _cameraFollow.ChangeCameraView(false);
+            _asteroidSpawner.IsDoubleSpeed = false;
         }
     }
 

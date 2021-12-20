@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class SmoothFollow : MonoBehaviour
 {
@@ -7,6 +8,21 @@ public class SmoothFollow : MonoBehaviour
     public float heightDamping = 2.0f;
     public float rotationDamping = 3.0f;
     public Transform target;
+
+    [SerializeField] private float _zoomedDistance = 5f;
+    [SerializeField] private float _zoomedHeight = 2.5f;
+
+    [SerializeField] private float _timeToZoom = 1f;
+
+    private Coroutine _coroutine;
+    private float _initialHeight;
+    private float _initialDistance;
+
+    private void Start()
+    {
+        _initialDistance = distance;
+        _initialHeight = height;
+    }
 
     private void LateUpdate()
     {
@@ -41,5 +57,38 @@ public class SmoothFollow : MonoBehaviour
 
         // Always look at the target
         transform.LookAt(target);
+    }
+
+    public void ChangeCameraView(bool zoomIn)
+    {
+        if (_coroutine != null)
+        {
+            StopCoroutine(_coroutine);
+        }
+
+        _coroutine = StartCoroutine(LerpCamera(zoomIn));
+    }
+
+    private IEnumerator LerpCamera(bool zoomIn)
+    {
+        float timeElapsed = 0;
+
+        var targetHeight = zoomIn ? _zoomedHeight : _initialHeight;
+        var targetDistance = zoomIn ? _zoomedDistance : _initialDistance;
+
+        while (timeElapsed < _timeToZoom)
+        {
+            height = Mathf.Lerp(height, targetHeight, timeElapsed / _timeToZoom);
+            distance = Mathf.Lerp(distance, targetDistance, timeElapsed / _timeToZoom);
+            timeElapsed += Time.deltaTime;
+
+            yield return null;
+        }
+
+        height = targetHeight;
+        distance = targetDistance;
+
+        _coroutine = null;
+
     }
 }

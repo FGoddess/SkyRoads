@@ -7,6 +7,8 @@ public class Asteroid : MonoBehaviour
     [SerializeField] private float _rotationSpeed = 10f;
     [SerializeField] private float _moveSpeed = 10f;
 
+    public float MoveSpeed { get => _moveSpeed; set => _moveSpeed *= value; }
+
     private ParticleSystem _collisionParticle;
 
     private void Awake()

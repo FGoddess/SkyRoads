@@ -812,9 +812,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distance: 5.7
   height: 2.41
-  heightDamping: 2
+  heightDamping: 5
   rotationDamping: 3
   target: {fileID: 6014798440123320668}
+  _zoomedDistance: 2.4
+  _zoomedHeight: 1.2
+  _timeToZoom: 1
 --- !u!1001 &1151943581
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1280,7 +1283,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 5
   _rotationSmooth: 10
-  _score: {fileID: 0}
+  _score: {fileID: 131045399}
+  _asteroidSpawner: {fileID: 1355264700}
 --- !u!136 &6014798440122832254
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1290,7 +1294,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 6014798440122832252}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.93
   m_Height: 2.77
   m_Direction: 2
