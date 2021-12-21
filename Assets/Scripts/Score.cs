@@ -59,6 +59,7 @@ public class Score : MonoBehaviour
         if (PlayerPrefs.GetInt(_highscoreSaveKey, 0) < _highscore)
         {
             PlayerPrefs.SetInt(_highscoreSaveKey, _highscore);
+            UIManager.Instance.ActivateCongratulationsText();
         }
     }
 

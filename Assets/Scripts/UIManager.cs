@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +14,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text _asteroidsText;
     [SerializeField] private Text _timeText;
 
+    [SerializeField] private Text _congratulationsText;
+
     [SerializeField] private Image _deathPanel;
     [SerializeField] private Image _startPanel;
 
@@ -21,6 +25,8 @@ public class UIManager : MonoBehaviour
     private int _deathScreenMaxTextSize = 60;
 
     private float _ySpasing = 100f;
+
+    private float _fadeTime = 1f;
 
     private Vector2 _newTextPosition = new Vector2(800f, 100f);
 
@@ -63,12 +69,12 @@ public class UIManager : MonoBehaviour
         {
             _instance = this;
         }
+
+        _congratulationsText.gameObject.SetActive(false);
     }
 
     public void ShowDeathScreen()
     {
-        _deathPanel.gameObject.SetActive(true);
-
         float y = 0;
 
         foreach (var text in _scores)
@@ -84,6 +90,33 @@ public class UIManager : MonoBehaviour
 
             y += _ySpasing;
 
+            text.transform.SetParent(_deathPanel.transform);
+
         }
+
+        StartCoroutine(FadeIn());
+    }
+
+    private IEnumerator FadeIn()
+    {
+        float timeElapsed = 0;
+
+        _deathPanel.gameObject.SetActive(true);
+        var canvasGroup = _deathPanel.gameObject.GetComponent<CanvasGroup>();
+
+        while (timeElapsed < _fadeTime)
+        {
+            canvasGroup.alpha = Mathf.Lerp(canvasGroup.alpha, 1, timeElapsed / _fadeTime);
+            timeElapsed += Time.deltaTime;
+
+            yield return null;
+        }
+
+        canvasGroup.alpha = 1;
+    }
+
+    public void ActivateCongratulationsText()
+    {
+        _congratulationsText.gameObject.SetActive(true);
     }
 }

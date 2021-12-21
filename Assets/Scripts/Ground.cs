@@ -8,6 +8,7 @@ public class Ground : MonoBehaviour
     private Renderer _renderer;
 
     private float _speed = 2f;
+    private float _maxSpeed = 4.5f;
 
     private float _maxYOffset = 10f;
     private float _yOffset = 0;
@@ -17,19 +18,19 @@ public class Ground : MonoBehaviour
         DifficultyManager.Instance.MultiplierChanged += OnDifficultyMultiplierChanged;
     }
 
+    private void OnDisable()
+    {
+        DifficultyManager.Instance.MultiplierChanged -= OnDifficultyMultiplierChanged;
+    }
+
     private void OnDifficultyMultiplierChanged(float value)
     {
         _speed += value;
 
-        if(_speed > 4.5f)
+        if(_speed > _maxSpeed)
         {
             OnDisable();
         }
-    }
-
-    private void OnDisable()
-    {
-        DifficultyManager.Instance.MultiplierChanged -= OnDifficultyMultiplierChanged;
     }
 
     private void Start()

@@ -7,7 +7,7 @@ public class SmoothFollow : MonoBehaviour
     [SerializeField] private float _height = 5.0f;
     [SerializeField] private float _heightDamping = 2.0f;
     [SerializeField] private float _rotationDamping = 3.0f;
-    [SerializeField] private Transform _target;
+    public Transform _target;
 
     [SerializeField] private float _zoomedDistance = 5f;
     [SerializeField] private float _zoomedHeight = 2.5f;

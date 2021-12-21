@@ -16,6 +16,7 @@ public class PlayerMover : MonoBehaviour
     private bool _isDead;
 
     [SerializeField] private Score _score; // REMOVE THIS
+    [SerializeField] private Ground _ground; // REMOVE THIS
 
     private void Start()
     {
@@ -59,12 +60,18 @@ public class PlayerMover : MonoBehaviour
 
     private IEnumerator DeathRoutine()
     {
-        _score.TrySaveHighScore();
-
-        if(Time.timeScale != 1)
+        if (Time.timeScale != 1)
         {
             Time.timeScale = 1;
         }
+
+        _score.TrySaveHighScore();
+        _ground.enabled = false;
+
+        _cameraFollow._target = null;
+
+        GetComponent<Rigidbody>().useGravity = true;
+        GetComponent<Rigidbody>().AddExplosionForce(5f, new Vector3(transform.position.x - 0.2f, transform.position.y - 0.5f, transform.position.z - 0.5f), 2f, 0f, ForceMode.Impulse);
 
         yield return new WaitForSeconds(1f);
 
