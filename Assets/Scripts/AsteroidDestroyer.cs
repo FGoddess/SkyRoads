@@ -7,7 +7,7 @@ public class AsteroidDestroyer : MonoBehaviour
     [SerializeField] private Score _score;
 
     private int _scoreForAsteroid = 5;
-    private float _deactivationDelay = 1f;
+    private float _deactivationDelay = 0.5f;
 
     private int _asteroidsPassed = 0;
 

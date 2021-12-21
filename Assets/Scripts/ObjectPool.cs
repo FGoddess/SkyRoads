@@ -12,19 +12,6 @@ public class ObjectPool : MonoBehaviour
 
     private List<GameObject> _pooledObjects;
 
-    public GameObject GetPooledObject()
-    {
-        for (int i = 0; i < _pooledObjects.Count; i++)
-        {
-            if(!_pooledObjects[i].activeInHierarchy)
-            {
-                return _pooledObjects[i];
-            }
-        }
-
-        return null;
-    }
-
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -40,11 +27,24 @@ public class ObjectPool : MonoBehaviour
     private void Start()
     {
         _pooledObjects = new List<GameObject>();
-        for(int i = 0; i < _amountToPool; i++)
+        for (int i = 0; i < _amountToPool; i++)
         {
             var temp = Instantiate(_objToPool, transform);
             temp.SetActive(false);
             _pooledObjects.Add(temp);
         }
+    }
+
+    public GameObject GetPooledObject()
+    {
+        for (int i = 0; i < _pooledObjects.Count; i++)
+        {
+            if(!_pooledObjects[i].activeInHierarchy)
+            {
+                return _pooledObjects[i];
+            }
+        }
+
+        return null;
     }
 }

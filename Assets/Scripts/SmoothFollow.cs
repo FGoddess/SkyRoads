@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class SmoothFollow : MonoBehaviour
 {
-    [SerializeField] private float distance = 10.0f;
-    [SerializeField] private float height = 5.0f;
-    [SerializeField] private float heightDamping = 2.0f;
-    [SerializeField] private float rotationDamping = 3.0f;
-    [SerializeField] private Transform target;
+    [SerializeField] private float _distance = 10.0f;
+    [SerializeField] private float _height = 5.0f;
+    [SerializeField] private float _heightDamping = 2.0f;
+    [SerializeField] private float _rotationDamping = 3.0f;
+    [SerializeField] private Transform _target;
 
     [SerializeField] private float _zoomedDistance = 5f;
     [SerializeField] private float _zoomedHeight = 2.5f;
@@ -20,30 +20,30 @@ public class SmoothFollow : MonoBehaviour
 
     private void Start()
     {
-        _initialDistance = distance;
-        _initialHeight = height;
+        _initialDistance = _distance;
+        _initialHeight = _height;
     }
 
     private void LateUpdate()
     {
         // Early out if we don't have a target
-        if (!target)
+        if (!_target)
         {
             return;
         }
 
         // Calculate the current rotation angles
-        float wantedRotationAngle = target.eulerAngles.y;
-        float wantedHeight = target.position.y + height;
+        float wantedRotationAngle = _target.eulerAngles.y;
+        float wantedHeight = _target.position.y + _height;
 
         float currentRotationAngle = transform.eulerAngles.y;
         float currentHeight = transform.position.y;
 
         // Damp the rotation around the y-axis
-        currentRotationAngle = Mathf.LerpAngle(currentRotationAngle, wantedRotationAngle, rotationDamping * Time.deltaTime);
+        currentRotationAngle = Mathf.LerpAngle(currentRotationAngle, wantedRotationAngle, _rotationDamping * Time.deltaTime);
 
         // Damp the height
-        currentHeight = Mathf.Lerp(currentHeight, wantedHeight, heightDamping * Time.deltaTime);
+        currentHeight = Mathf.Lerp(currentHeight, wantedHeight, _heightDamping * Time.deltaTime);
 
         // Convert the angle into a rotation
         Quaternion currentRotation = Quaternion.Euler(0, currentRotationAngle, 0);
@@ -51,12 +51,12 @@ public class SmoothFollow : MonoBehaviour
         // Set the position of the camera on the x-z plane to:
         // distance meters behind the target
         var pos = transform.position;
-        pos = target.position - currentRotation * Vector3.forward * distance;
+        pos = _target.position - currentRotation * Vector3.forward * _distance;
         pos.y = currentHeight;
         transform.position = pos;
 
         // Always look at the target
-        transform.LookAt(target);
+        transform.LookAt(_target);
     }
 
     public void ChangeCameraView(bool zoomIn)
@@ -78,15 +78,15 @@ public class SmoothFollow : MonoBehaviour
 
         while (timeElapsed < _timeToZoom)
         {
-            height = Mathf.Lerp(height, targetHeight, timeElapsed / _timeToZoom);
-            distance = Mathf.Lerp(distance, targetDistance, timeElapsed / _timeToZoom);
+            _height = Mathf.Lerp(_height, targetHeight, timeElapsed / _timeToZoom);
+            _distance = Mathf.Lerp(_distance, targetDistance, timeElapsed / _timeToZoom);
             timeElapsed += Time.deltaTime;
 
             yield return null;
         }
 
-        height = targetHeight;
-        distance = targetDistance;
+        _height = targetHeight;
+        _distance = targetDistance;
 
         _coroutine = null;
 

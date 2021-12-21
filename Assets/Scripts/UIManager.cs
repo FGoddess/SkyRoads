@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +13,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text _timeText;
 
     [SerializeField] private Image _deathPanel;
+    [SerializeField] private Image _startPanel;
 
     private List<Text> _scores;
 
@@ -27,6 +27,10 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         _scores = new List<Text>() { _scoreText, _highScoreText, _asteroidsText, _timeText };
+        if (!_startPanel.gameObject.activeInHierarchy)
+        {
+            _startPanel.gameObject.SetActive(true);
+        }
     }
 
     public string ScoreText

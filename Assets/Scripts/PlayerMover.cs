@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMover : MonoBehaviour
@@ -12,6 +13,8 @@ public class PlayerMover : MonoBehaviour
 
     private float _xBoundsPoition = 3.5f;
 
+    private bool _isDead;
+
     [SerializeField] private Score _score; // REMOVE THIS
 
     private void Start()
@@ -21,6 +24,8 @@ public class PlayerMover : MonoBehaviour
 
     private void Update()
     {
+        if (_isDead) { return; }
+
         var horizontalInput = Input.GetAxisRaw("Horizontal");
 
         transform.Translate(new Vector3(horizontalInput, 0, 0) * _speed * Time.deltaTime, Space.World);
@@ -49,7 +54,20 @@ public class PlayerMover : MonoBehaviour
 
     public void Die()
     {
+        StartCoroutine(DeathRoutine());
+    }
+
+    private IEnumerator DeathRoutine()
+    {
         _score.TrySaveHighScore();
+
+        if(Time.timeScale != 1)
+        {
+            Time.timeScale = 1;
+        }
+
+        yield return new WaitForSeconds(1f);
+
         Time.timeScale = 0;
         UIManager.Instance.ShowDeathScreen();
     }

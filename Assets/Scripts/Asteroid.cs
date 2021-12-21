@@ -1,11 +1,19 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Asteroid : MonoBehaviour
 {
     [SerializeField] private float _rotationSpeed = 10f;
-    [SerializeField] private float _moveSpeed = 20f;
+
+    private float _moveSpeed = 20f;
+    private float _maxMoveSpeed = 35f;
+
+    public float MoveSpeed
+    {
+        get => _moveSpeed;
+        set =>_moveSpeed = value;
+    }
+    public float MaxMoveSpeed { get => _maxMoveSpeed; }
 
     private ParticleSystem _collisionParticle;
 
@@ -22,7 +30,7 @@ public class Asteroid : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.TryGetComponent(out PlayerMover player))
+        if (other.TryGetComponent(out PlayerMover player))
         {
             StartCoroutine(PlayerCollision(player));
         }

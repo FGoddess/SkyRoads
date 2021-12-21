@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,27 +6,49 @@ using UnityEngine;
 public class Ground : MonoBehaviour
 {
     private Renderer _renderer;
+
+    private float _speed = 2f;
+
     private float _maxYOffset = 10f;
+    private float _yOffset = 0;
+
+    private void OnEnable()
+    {
+        DifficultyManager.Instance.MultiplierChanged += OnDifficultyMultiplierChanged;
+    }
+
+    private void OnDifficultyMultiplierChanged(float value)
+    {
+        _speed += value;
+
+        if(_speed > 4.5f)
+        {
+            OnDisable();
+        }
+    }
+
+    private void OnDisable()
+    {
+        DifficultyManager.Instance.MultiplierChanged -= OnDifficultyMultiplierChanged;
+    }
 
     private void Start()
     {
         _renderer = GetComponent<Renderer>();
     }
 
-    float offsetY = 0;
-
     private void Update()
     {
-        offsetY += Time.deltaTime * 2f;
+        _yOffset += Time.deltaTime * _speed;
 
-        if(offsetY > _maxYOffset)
+        if(_yOffset > _maxYOffset)
         {
-            offsetY = 0;
+            _yOffset = 0;
         }
 
-        _renderer.material.SetTextureOffset("_MainTex", new Vector2(1, -offsetY));
-        _renderer.material.SetTextureOffset("_SpecTex", new Vector2(1, -offsetY));
-        _renderer.material.SetTextureOffset("_NormalTex", new Vector2(1, -offsetY));
-        _renderer.material.SetTextureOffset("_EmissionTex", new Vector2(1, -offsetY));
+        _renderer.material.SetTextureOffset("_MainTex", new Vector2(1, -_yOffset));
+        _renderer.material.SetTextureOffset("_SpecTex", new Vector2(1, -_yOffset));
+        _renderer.material.SetTextureOffset("_NormalTex", new Vector2(1, -_yOffset));
+        _renderer.material.SetTextureOffset("_EmissionTex", new Vector2(1, -_yOffset));
     }
 }
