@@ -54,7 +54,7 @@ public class Score : MonoBehaviour
         }
     }
 
-    public void SaveHighScore()
+    public void TrySaveHighScore()
     {
         if (PlayerPrefs.GetInt(_highscoreSaveKey, 0) < _highscore)
         {
@@ -64,6 +64,6 @@ public class Score : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        SaveHighScore();
+        TrySaveHighScore();
     }
 }

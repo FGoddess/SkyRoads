@@ -4,7 +4,7 @@ public class AsteroidsSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject _asteroidPrefab;
 
-    private float _zSpawnPosition = 30f;
+    private float _zSpawnPosition = 60f;
     private float _boundsXPosition = 3.4f;
 
     private void Start()

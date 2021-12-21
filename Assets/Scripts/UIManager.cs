@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,22 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text _highScoreText;
     [SerializeField] private Text _asteroidsText;
     [SerializeField] private Text _timeText;
+
+    [SerializeField] private Image _deathPanel;
+
+    private List<Text> _scores;
+
+    private int _deathScreenMinTextSize = 30;
+    private int _deathScreenMaxTextSize = 60;
+
+    private float _ySpasing = 100f;
+
+    private Vector2 _newTextPosition = new Vector2(800f, 100f);
+
+    private void Start()
+    {
+        _scores = new List<Text>() { _scoreText, _highScoreText, _asteroidsText, _timeText };
+    }
 
     public string ScoreText
     {
@@ -34,6 +51,35 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        _instance = this;
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
+
+    public void ShowDeathScreen()
+    {
+        _deathPanel.gameObject.SetActive(true);
+
+        float y = 0;
+
+        foreach (var text in _scores)
+        {
+            text.rectTransform.sizeDelta = _newTextPosition;
+
+            text.resizeTextMinSize = _deathScreenMinTextSize;
+            text.resizeTextMaxSize = _deathScreenMaxTextSize;
+
+            text.alignment = TextAnchor.MiddleCenter;
+
+            text.rectTransform.localPosition = new Vector3(0, y, 0);
+
+            y += _ySpasing;
+
+        }
     }
 }

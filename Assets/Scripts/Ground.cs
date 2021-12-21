@@ -16,7 +16,7 @@ public class Ground : MonoBehaviour
 
     private void Update()
     {
-        offsetY += Time.deltaTime;
+        offsetY += Time.deltaTime * 2f;
 
         if(offsetY > _maxYOffset)
         {

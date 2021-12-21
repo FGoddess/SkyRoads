@@ -12,10 +12,7 @@ public class PlayerMover : MonoBehaviour
 
     private float _xBoundsPoition = 3.5f;
 
-    private bool _isDead;
-
     [SerializeField] private Score _score; // REMOVE THIS
-    [SerializeField] private AsteroidsSpawner _asteroidSpawner; // REMOVE THIS
 
     private void Start()
     {
@@ -24,8 +21,6 @@ public class PlayerMover : MonoBehaviour
 
     private void Update()
     {
-        if (_isDead) return;
-
         var horizontalInput = Input.GetAxisRaw("Horizontal");
 
         transform.Translate(new Vector3(horizontalInput, 0, 0) * _speed * Time.deltaTime, Space.World);
@@ -41,23 +36,22 @@ public class PlayerMover : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            _speed *= _speedMultiplier;
+            Time.timeScale = _speedMultiplier;
             _cameraFollow.ChangeCameraView(true);
-            _asteroidSpawner.IsDoubleSpeed = true;
         }
 
         if (Input.GetKeyUp(KeyCode.Space))
         {
-            _speed /= _speedMultiplier;
+            Time.timeScale = 1;
             _cameraFollow.ChangeCameraView(false);
-            _asteroidSpawner.IsDoubleSpeed = false;
         }
     }
 
     public void Die()
     {
-        _isDead = true;
-        _score.SaveHighScore();
+        _score.TrySaveHighScore();
+        Time.timeScale = 0;
+        UIManager.Instance.ShowDeathScreen();
     }
 
 }

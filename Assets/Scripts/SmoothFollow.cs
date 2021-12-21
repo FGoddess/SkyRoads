@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class SmoothFollow : MonoBehaviour
 {
-    public float distance = 10.0f;
-    public float height = 5.0f;
-    public float heightDamping = 2.0f;
-    public float rotationDamping = 3.0f;
-    public Transform target;
+    [SerializeField] private float distance = 10.0f;
+    [SerializeField] private float height = 5.0f;
+    [SerializeField] private float heightDamping = 2.0f;
+    [SerializeField] private float rotationDamping = 3.0f;
+    [SerializeField] private Transform target;
 
     [SerializeField] private float _zoomedDistance = 5f;
     [SerializeField] private float _zoomedHeight = 2.5f;

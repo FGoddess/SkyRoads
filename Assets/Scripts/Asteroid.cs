@@ -5,9 +5,7 @@ using UnityEngine;
 public class Asteroid : MonoBehaviour
 {
     [SerializeField] private float _rotationSpeed = 10f;
-    [SerializeField] private float _moveSpeed = 10f;
-
-    public float MoveSpeed { get => _moveSpeed; set => _moveSpeed *= value; }
+    [SerializeField] private float _moveSpeed = 20f;
 
     private ParticleSystem _collisionParticle;
 
