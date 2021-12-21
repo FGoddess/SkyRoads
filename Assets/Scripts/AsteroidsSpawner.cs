@@ -11,6 +11,7 @@ public class AsteroidsSpawner : MonoBehaviour
 
     [SerializeField] private float _asteroidsSpeed = 25f;
     [SerializeField] private float _asteroidsMaxSpeed = 40f;
+
     [SerializeField] private float _speedPerDifficultyTick = 1f;
 
     private void OnEnable()
@@ -56,7 +57,9 @@ public class AsteroidsSpawner : MonoBehaviour
             {
                 asteroid.transform.position = new Vector3(Random.Range(-_boundsXPosition, _boundsXPosition), 0.5f, _zSpawnPosition);
 
-                asteroid.GetComponent<Asteroid>().MoveSpeed = _asteroidsSpeed;
+                var temp = asteroid.GetComponent<Asteroid>();
+
+                temp.MoveSpeed = _asteroidsSpeed;
 
                 var randomScale = Random.Range(0.3f, 0.6f);
 

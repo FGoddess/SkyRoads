@@ -8,11 +8,8 @@ public class Asteroid : MonoBehaviour
     private float _moveSpeed = 20f;
     private float _maxMoveSpeed = 35f;
 
-    public float MoveSpeed
-    {
-        get => _moveSpeed;
-        set =>_moveSpeed = value;
-    }
+    public float MoveSpeed { get => _moveSpeed; set => _moveSpeed = value; }
+    public float RotationSpeed { get => _rotationSpeed; set => _rotationSpeed = value; }
     public float MaxMoveSpeed { get => _maxMoveSpeed; }
 
     private ParticleSystem _collisionParticle;
@@ -24,7 +21,7 @@ public class Asteroid : MonoBehaviour
 
     private void Update()
     {
-        transform.Rotate(Vector3.forward * _rotationSpeed * Time.deltaTime);
+        transform.Rotate(Vector3.forward * (_rotationSpeed / Time.timeScale) * Time.deltaTime);
         transform.Translate(Vector3.back * _moveSpeed * Time.deltaTime);
     }
 
