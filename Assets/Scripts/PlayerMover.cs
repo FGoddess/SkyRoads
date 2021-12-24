@@ -15,8 +15,8 @@ public class PlayerMover : MonoBehaviour
 
     private bool _isDead;
 
-    [SerializeField] private Score _score; // REMOVE THIS
-    [SerializeField] private Ground _ground; // REMOVE THIS
+    [SerializeField] private Score _score;
+    [SerializeField] private Ground _ground;
 
     private void Start()
     {

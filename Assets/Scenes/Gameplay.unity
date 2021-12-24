@@ -1713,6 +1713,7 @@ MonoBehaviour:
   _asteroidsSpeed: 30
   _asteroidsMaxSpeed: 60
   _speedPerDifficultyTick: 1
+  _difficultyManager: {fileID: 1638665859}
 --- !u!4 &1355264701
 Transform:
   m_ObjectHideFlags: 0
@@ -1914,6 +1915,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af547a4d06a3a0b428ca195184cb4555, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _difficultyManager: {fileID: 1638665859}
 --- !u!1 &1399785109
 GameObject:
   m_ObjectHideFlags: 0

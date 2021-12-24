@@ -13,14 +13,16 @@ public class Ground : MonoBehaviour
     private float _maxYOffset = 10f;
     private float _yOffset = 0;
 
+    [SerializeField] private DifficultyManager _difficultyManager;
+
     private void OnEnable()
     {
-        DifficultyManager.Instance.MultiplierChanged += OnDifficultyMultiplierChanged;
+        _difficultyManager.MultiplierChanged += OnDifficultyMultiplierChanged;
     }
 
     private void OnDisable()
     {
-        DifficultyManager.Instance.MultiplierChanged -= OnDifficultyMultiplierChanged;
+        _difficultyManager.MultiplierChanged -= OnDifficultyMultiplierChanged;
     }
 
     private void OnDifficultyMultiplierChanged(float value)

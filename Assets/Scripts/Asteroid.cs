@@ -21,6 +21,8 @@ public class Asteroid : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale == 0) return;
+
         transform.Rotate(Vector3.forward * (_rotationSpeed / Time.timeScale) * Time.deltaTime);
         transform.Translate(Vector3.back * _moveSpeed * Time.deltaTime);
     }

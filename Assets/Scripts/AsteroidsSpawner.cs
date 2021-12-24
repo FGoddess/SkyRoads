@@ -14,14 +14,16 @@ public class AsteroidsSpawner : MonoBehaviour
 
     [SerializeField] private float _speedPerDifficultyTick = 1f;
 
+    [SerializeField] private DifficultyManager _difficultyManager;
+
     private void OnEnable()
     {
-        DifficultyManager.Instance.MultiplierChanged += OnDifficultyMultiplierChanged;
+        _difficultyManager.MultiplierChanged += OnDifficultyMultiplierChanged;
     }
 
     private void OnDisable()
     {
-        DifficultyManager.Instance.MultiplierChanged -= OnDifficultyMultiplierChanged;
+        _difficultyManager.MultiplierChanged -= OnDifficultyMultiplierChanged;
     }
 
     private void OnDifficultyMultiplierChanged(float value)
